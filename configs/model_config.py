@@ -47,3 +47,9 @@ NUM_SENTIMENT_CLASSES = 3
 HIDDEN_SIZE = 768
 
 FREEZE_BACKBONE = True
+
+# ==================================================
+# Confidence
+# ==================================================
+
+LOW_CONFIDENCE_THRESHOLD = 0.60
