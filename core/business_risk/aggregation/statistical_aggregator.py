@@ -171,7 +171,11 @@ class StatisticalAggregator:
                 "mention_ratio": 0.0,
 
                 "strength": 0.0,
-                "average_strength": 0.0
+                "average_strength": 0.0 ,
+
+                "negative_strength":0.0,
+
+                "average_negative_strength":0.0
 
             },
 
@@ -181,7 +185,13 @@ class StatisticalAggregator:
                 "mention_ratio": 0.0,
 
                 "strength": 0.0,
-                "average_strength": 0.0
+                "average_strength": 0.0,
+
+                "negative_strength":0.0,
+
+                "average_negative_strength":0.0
+
+
 
             },
 
@@ -191,7 +201,11 @@ class StatisticalAggregator:
                 "mention_ratio": 0.0,
 
                 "strength": 0.0,
-                "average_strength": 0.0
+                "average_strength": 0.0 ,
+
+                "negative_strength":0.0,
+
+                "average_negative_strength":0.0
 
             }
 
@@ -199,13 +213,19 @@ class StatisticalAggregator:
 
         for prediction in predictions:
 
+            # Count mentions
             for aspect in prediction["detected_aspects"]:
 
                 aspect_statistics[aspect]["mentions"] += 1
 
+            # Accumulate strengths
             for aspect, probability in prediction["aspect_probabilities"].items():
 
                 aspect_statistics[aspect]["strength"] += probability
+
+                if prediction["sentiment"] == "negative":
+
+                    aspect_statistics[aspect]["negative_strength"] += probability
 
         for aspect in aspect_statistics.values():
 
@@ -227,6 +247,14 @@ class StatisticalAggregator:
 
                 )
 
+                aspect["average_negative_strength"] = round(
+
+                    aspect["negative_strength"] / total_reviews,
+
+                    4
+
+                )
+
             aspect["strength"] = round(
 
                 aspect["strength"],
@@ -234,6 +262,16 @@ class StatisticalAggregator:
                 4
 
             )
+
+            aspect["negative_strength"] = round(
+
+                aspect["negative_strength"],
+
+                4
+
+            )
+
+            
 
         result.aspect_statistics = aspect_statistics
 
