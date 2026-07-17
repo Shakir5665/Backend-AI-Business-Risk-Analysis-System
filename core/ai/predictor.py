@@ -35,15 +35,15 @@ class Predictor:
         )
 
         # Load all shared AI resources once
-        self.loader = ModelLoader()
+        self._loader = ModelLoader()
 
         # AI Pipeline
-        self.engine = InferenceEngine(
-            self.loader
+        self._engine = InferenceEngine(
+            self._loader
         )
 
-        self.formatter = PredictionFormatter(
-            self.loader
+        self._formatter = PredictionFormatter(
+            self._loader
         )
 
         logger.info(
@@ -57,11 +57,11 @@ class Predictor:
         review: str
     ) -> Dict:
 
-        outputs = self.engine.predict(
+        outputs = self._engine.predict(
             review
         )
 
-        result = self.formatter.format(
+        result = self._formatter.format(
             review,
             outputs
         )

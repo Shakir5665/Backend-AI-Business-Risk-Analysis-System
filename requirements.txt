@@ -29,3 +29,5 @@ tqdm
 regex
 
 sentencepiece 
+
+selenium

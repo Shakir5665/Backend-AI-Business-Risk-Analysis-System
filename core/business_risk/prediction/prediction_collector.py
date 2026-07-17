@@ -56,7 +56,7 @@ class PredictionCollector:
         self
     ) -> List[Dict]:
 
-        return self._predictions
+        return self._predictions.copy()
 
     # --------------------------------------------------
 

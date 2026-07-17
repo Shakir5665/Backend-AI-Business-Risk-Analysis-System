@@ -1,34 +1,43 @@
-"""
-Product Analysis Result
-
-Represents the complete analysis
-of a single product.
-
-Project:
-AI-Powered Business Risk Analysis
-and Recommendation System
-"""
-
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Optional
 
 from core.scraper.dto.product import Product
 from core.business_risk.aggregation.aggregation_result import AggregationResult
 
 
-@dataclass(slots=True)
+@dataclass
 class ProductAnalysisResult:
     """
-    Final result returned by the
-    Product Analysis Engine.
+    Represents the complete analysis result for a single product.
+
+    This DTO is gradually populated as the product passes through
+    each stage of the analysis pipeline.
     """
 
     product: Product
+    aggregation_result: AggregationResult
 
-    analysis: AggregationResult
+    # These will be populated in later phases
+    business_risk: Optional[Any] = None
+    reliability: Optional[Any] = None
+    recommendations: Optional[Any] = None
 
-    business_risk: dict[str, Any] | None = None
+    def to_dict(self) -> dict:
+        """
+        Convert the complete analysis result into a dictionary.
+        """
 
-    assessment_reliability: dict[str, Any] | None = None
+        return {
+            "product": self.product.__dict__,
+            "aggregation_result": self.aggregation_result.to_dict(),
+            "business_risk": self.business_risk,
+            "reliability": self.reliability,
+            "recommendations": self.recommendations,
+        }
 
-    recommendations: list[str] | None = None
+    def __str__(self) -> str:
+        return (
+            f"ProductAnalysisResult("
+            f"product='{self.product.name}', "
+            f"business_risk={self.business_risk})"
+        )

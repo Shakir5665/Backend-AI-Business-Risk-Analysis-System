@@ -35,7 +35,7 @@ class StatisticalAggregator:
     def aggregate(
         self,
         predictions: List[Dict]
-    ) -> Dict:
+    ) -> AggregationResult:
 
         result = AggregationResult()
 
@@ -58,7 +58,7 @@ class StatisticalAggregator:
             result
         )
 
-        return result.to_dict()
+        return result
 
     # ------------------------------------------------
     # Review Statistics
@@ -66,9 +66,9 @@ class StatisticalAggregator:
 
     def _calculate_review_statistics(
         self,
-        predictions,
-        result
-    ):
+        predictions: List[Dict],
+        result: AggregationResult
+    ) -> None:
 
         total_reviews = len(predictions)
 
