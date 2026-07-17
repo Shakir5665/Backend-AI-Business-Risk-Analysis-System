@@ -15,7 +15,7 @@ AI-Powered Business Risk Analysis
 and Recommendation System
 """
 
-from typing import Dict
+from typing import Dict, List
 
 import torch
 
@@ -90,3 +90,69 @@ class InferenceEngine:
             )
 
         return outputs
+
+    # --------------------------------------------------
+
+    def predict_batch(
+        self,
+        reviews: List[str]
+    ) -> Dict[str, torch.Tensor]:
+
+        # -----------------------------
+        # Preprocess
+        # -----------------------------
+
+        preprocessed_reviews = [
+            self.preprocessor.preprocess(review)
+            for review in reviews
+        ]
+
+        # -----------------------------
+        # Tokenize
+        # -----------------------------
+
+        tokens = self.loader.tokenizer_instance.tokenize_batch(
+            preprocessed_reviews
+        )
+
+        input_ids = tokens["input_ids"].to(
+            self.loader.device
+        )
+
+        attention_mask = tokens["attention_mask"].to(
+            self.loader.device
+        )
+
+        # -----------------------------
+        # Model Inference
+        # -----------------------------
+
+        with torch.no_grad():
+
+            outputs = self.loader.model_instance(
+
+                input_ids=input_ids,
+
+                attention_mask=attention_mask
+
+            )
+
+        return outputs
+
+    # --------------------------------------------------
+
+    def get_single_output(
+        self,
+        outputs: Dict[str, torch.Tensor],
+        index: int
+    ) -> Dict[str, torch.Tensor]:
+        """
+        Extract the outputs for a single review at the given index from the batch outputs.
+        """
+        single_output = {}
+        for k, v in outputs.items():
+            if isinstance(v, torch.Tensor):
+                single_output[k] = v[index:index+1]
+            else:
+                single_output[k] = v
+        return single_output

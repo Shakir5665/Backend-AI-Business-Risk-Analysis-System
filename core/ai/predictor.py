@@ -14,7 +14,7 @@ AI-Powered Business Risk Analysis
 and Recommendation System
 """
 
-from typing import Dict
+from typing import Dict, List
 
 from core.ai.inference.model_loader import ModelLoader
 from core.ai.inference.inference_engine import InferenceEngine
@@ -67,3 +67,35 @@ class Predictor:
         )
 
         return result
+
+    # --------------------------------------------------
+
+    def predict_batch(
+        self,
+        reviews: List[str]
+    ) -> List[Dict]:
+
+        if not reviews:
+            return []
+
+        outputs = self._engine.predict_batch(
+            reviews
+        )
+
+        results = []
+
+        for i, review in enumerate(reviews):
+
+            single_output = self._engine.get_single_output(
+                outputs,
+                i
+            )
+
+            result = self._formatter.format(
+                review,
+                single_output
+            )
+
+            results.append(result)
+
+        return results
