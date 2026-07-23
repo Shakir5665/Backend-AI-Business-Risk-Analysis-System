@@ -1,6 +1,6 @@
 import skfuzzy.control as ctrl
 
-from business_risk.fuzzy.fuzzy_variables import (
+from core.business_risk.fuzzy.fuzzy_variables import (
     create_input_variable,
     create_output_variable,
 )

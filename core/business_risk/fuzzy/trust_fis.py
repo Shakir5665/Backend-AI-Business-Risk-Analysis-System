@@ -1,5 +1,5 @@
-from business_risk.fuzzy.base_fis import BaseFIS
-from business_risk.fuzzy.rules.trust_rules import (
+from core.business_risk.fuzzy.base_fis import BaseFIS
+from core.business_risk.fuzzy.rules.trust_rules import (
     build_trust_control_system,
 )
 

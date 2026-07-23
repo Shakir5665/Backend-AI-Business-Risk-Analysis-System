@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 
 from .aspect_risk import AspectRisk
+from .risk_level import RiskLevel
 
 
 @dataclass
@@ -14,6 +15,6 @@ class BusinessRiskResult:
     trust: AspectRisk
 
     business_risk_index: float
-    business_risk_level: str
+    business_risk_level: RiskLevel
 
     recommendations: list[str] = field(default_factory=list)

@@ -1,5 +1,5 @@
-from business_risk.fuzzy.base_fis import BaseFIS
-from business_risk.fuzzy.rules.delivery_rules import (
+from core.business_risk.fuzzy.base_fis import BaseFIS
+from core.business_risk.fuzzy.rules.delivery_rules import (
     build_delivery_control_system,
 )
 
