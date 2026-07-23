@@ -50,3 +50,4 @@ class ProductAnalysisEngine:
             product=product,
             aggregation_result=aggregation_result
         )
+    

@@ -16,6 +16,7 @@ and Recommendation System
 
 from typing import List, Dict
 
+from configs.model_config import INFERENCE_BATCH_SIZE
 from core.ai.predictor import Predictor
 from core.scraper.dto.scraped_review import ScrapedReview
 
@@ -63,14 +64,20 @@ class ReviewPredictionPipeline:
 
         predictions = []
 
-        for review in reviews:
+        batch_size = INFERENCE_BATCH_SIZE
 
-            prediction = self._predictor.predict(
-                review.review_text
+        for i in range(0, len(reviews), batch_size):
+
+            batch = reviews[i : i + batch_size]
+
+            batch_reviews = [r.review_text for r in batch]
+
+            batch_predictions = self._predictor.predict_batch(
+                batch_reviews
             )
 
-            predictions.append(
-                prediction
+            predictions.extend(
+                batch_predictions
             )
 
         logger.info(
