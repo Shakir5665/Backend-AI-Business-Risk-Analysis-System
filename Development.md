@@ -10,7 +10,7 @@
 > **Version:** 1.0 | **Date:** September 2026
 
 ---
-
+ 
 ## Abstract
 
 This document provides a comprehensive development report for the AI-Powered Business Risk Analysis and Recommendation System. It covers the complete lifecycle of software development across nine subsystems: the overall system architecture, the Daraz web scraping engine, multilingual text preprocessing, the multi-task XLM-RoBERTa NLP model, the Fuzzy Logic risk analysis engine, the Business Risk Index (BRI) calculation engine, the knowledge-base-driven recommendation engine, the FastAPI backend and REST API integration, and the dashboard frontend integration. Each subsection describes the technical implementation approach, key design decisions, components developed, and integration points between subsystems.
